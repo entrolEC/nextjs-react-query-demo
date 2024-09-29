@@ -1,10 +1,16 @@
-import {isServer, QueryClient} from "@tanstack/query-core";
+import {defaultShouldDehydrateQuery, isServer, QueryClient} from "@tanstack/query-core";
 
 function makeQueryClient() {
     return new QueryClient({
         defaultOptions: {
             queries: {
-                staleTime: 100,
+                staleTime: 2000,
+            },
+            dehydrate: {
+                // include pending queries in dehydration
+                shouldDehydrateQuery: (query) =>
+                    defaultShouldDehydrateQuery(query) ||
+                    query.state.status === 'pending',
             },
         },
     })

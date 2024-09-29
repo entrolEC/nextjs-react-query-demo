@@ -4,11 +4,11 @@ import getQueryClient from "@/app/queryclient";
 import {ReactNode} from "react";
 import {getWeather} from "@/lib/fetcher";
 
-export default async function Layout({children}: { children: ReactNode }) {
+export default function Layout({children}: { children: ReactNode }) {
     const timeZone = 'Asia/Seoul'
     const queryClient = getQueryClient()
 
-    await queryClient.prefetchQuery({
+    queryClient.prefetchQuery({
         queryKey: ['weather', timeZone],
         queryFn: () => getWeather('Asia/Seoul')
     })

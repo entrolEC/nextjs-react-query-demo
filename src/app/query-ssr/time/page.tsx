@@ -1,14 +1,14 @@
 'use client'
 
-import {useQuery} from "@tanstack/react-query";
 import Link from "next/link";
 import Loading from "@/app/time/loading";
 import {getWeather} from "@/lib/fetcher";
+import {useSuspenseQuery} from "@tanstack/react-query";
 
 
 export default function Time() {
     const timeZone = 'Asia/Seoul'
-    const {data, isLoading} = useQuery({
+    const {data, isLoading} = useSuspenseQuery({
         queryKey: ['weather', timeZone],
         queryFn: () => getWeather('Asia/Seoul')
     })
