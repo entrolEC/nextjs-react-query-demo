@@ -1,29 +1,32 @@
-'use client'
+'use client';
 
-import Link from "next/link";
-import Loading from "@/app/time/loading";
-import {getWeather} from "@/lib/fetcher";
-import {useSuspenseQuery} from "@tanstack/react-query";
-
+import Link from 'next/link';
+import Loading from '@/app/nextjs/time/loading';
+import { getWeather } from '@/lib/fetcher';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export default function Time() {
-    const timeZone = 'Asia/Seoul'
-    const {data, isLoading} = useSuspenseQuery({
-        queryKey: ['weather', timeZone],
-        queryFn: () => getWeather('Asia/Seoul')
-    })
+  const timeZone = 'Asia/Seoul';
+  const { data, isLoading } = useSuspenseQuery({
+    queryKey: ['weather', timeZone],
+    queryFn: () => getWeather('Asia/Seoul'),
+  });
 
-    if (isLoading || !data) {
-        return Loading();
-    }
+  if (isLoading || !data) {
+    return Loading();
+  }
 
-    const {year, month, day, hour, minute, seconds, milliSeconds} = data;
+  const { year, month, day, hour, minute, seconds, milliSeconds } = data;
 
-    return (
-        <div className='flex h-full w-full justify-center items-center flex-col gap-4'>
-            <p className='font-bold text-4xl'>This is Query SSR Time Page</p>
-            <p className='text-xl'>{year}년&nbsp;{month}월&nbsp;{day}일&nbsp;&nbsp;{hour}시&nbsp;{minute}분&nbsp;{seconds}.{milliSeconds}초&nbsp;</p>
-            <Link href='/query-ssr' className='underline text-xl'>query home</Link>
-        </div>
-    );
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+      <p className="text-4xl font-bold">This is Query SSR Time Page</p>
+      <p className="text-xl">
+        {year}년&nbsp;{month}월&nbsp;{day}일&nbsp;&nbsp;{hour}시&nbsp;{minute}분&nbsp;{seconds}.{milliSeconds}초&nbsp;
+      </p>
+      <Link href="/query-ssr" className="text-xl underline">
+        query home
+      </Link>
+    </div>
+  );
 }
